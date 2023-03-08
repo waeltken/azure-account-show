@@ -8,6 +8,7 @@ azure-mgmt-subscription = "*"
 azure-identity = "*"
 
 [dev-packages]
+black = "*"
 
 [requires]
 python_version = "3.9"
