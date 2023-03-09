@@ -15,9 +15,11 @@ def show_subscription():
     try:
         credential = DefaultAzureCredential()
         subscription_client = SubscriptionClient(credential)
-        sub_list = subscription_client.subscriptions.list()
-        first_sub = next(sub_list, "No subscriptions for this account")
-        print(first_sub)
+        subscription_list = subscription_client.subscriptions.list()
+        if subscription_list == []:
+            print("No subscriptions for this account")
+        for subscription in subscription_list:
+            print(subscription)
     except ClientAuthenticationError as e:
         print(e.exc_msg)
 
