@@ -16,7 +16,7 @@ def show_subscription():
         credential = DefaultAzureCredential()
         subscription_client = SubscriptionClient(credential)
         subscription_list = subscription_client.subscriptions.list()
-        if subscription_list == []:
+        if not subscription_list:
             print("No subscriptions for this account")
         for subscription in subscription_list:
             print(subscription)
