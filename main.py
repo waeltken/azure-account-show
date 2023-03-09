@@ -1,10 +1,8 @@
-import sys, signal, time, logging
+import sys, signal, time
 
 from azure.identity import DefaultAzureCredential
 from azure.mgmt.subscription import SubscriptionClient
 from azure.core.exceptions import ClientAuthenticationError
-
-logging.basicConfig(level=logging.INFO)
 
 
 def main():
@@ -19,10 +17,9 @@ def show_subscription():
         subscription_client = SubscriptionClient(credential)
         sub_list = subscription_client.subscriptions.list()
         first_sub = next(sub_list, "No subscriptions for this account")
-        logging.info("halloooo?")
-        logging.info(first_sub)
+        print(first_sub)
     except ClientAuthenticationError as e:
-        logging.info(e.exc_msg)
+        print(e.exc_msg)
 
 
 def signal_handler(signal, frame):
