@@ -12,7 +12,6 @@ env:
     CONTAINER_NAME: azure-account-show
     DEPLOYMENT_MANIFEST_PATH: |
         manifests/deployment.yaml
-        manifests/service.yaml
 jobs:
     buildImage:
         permissions:
