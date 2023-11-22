@@ -1,9 +1,10 @@
-FROM python:3.9
-ENV PYTHONUNBUFFERED=1
+FROM python:3.11-slim
 WORKDIR /usr/src/app
-COPY ./Pipfile ./Pipfile.lock ./
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir pipenv && \
-		pipenv install --system --deploy --ignore-pipfile
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
 COPY . .
-CMD ["python", "main.py"]
+
+ENTRYPOINT ["python"]
+CMD ["app.py"]

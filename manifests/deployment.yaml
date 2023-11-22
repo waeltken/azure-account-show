@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: azure-account-show
+  labels:
+    app: azure-account-show
+  namespace: azure-account-show
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: azure-account-show
+  template:
+    metadata:
+      labels:
+        app: azure-account-show
+    spec:
+      containers:
+        - name: azure-account-show
+          image: clwaltke.azurecr.io/azure-account-show:latest
