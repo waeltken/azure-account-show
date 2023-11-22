@@ -1,22 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: default-workflow-aks
+  name: azure-account-show
   labels:
-    app: default-workflow-aks
+    app: azure-account-show
   namespace: azure-account-show
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: default-workflow-aks
+      app: azure-account-show
   template:
     metadata:
       labels:
-        app: default-workflow-aks
+        app: azure-account-show
     spec:
       containers:
-        - name: default-workflow-aks
+        - name: azure-account-show
           image: clwaltke.azurecr.io/azure-account-show:latest
-          ports:
-            - containerPort: 8000
