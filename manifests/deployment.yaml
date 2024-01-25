@@ -1,20 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: azure-account-show
+  name: build-and-deploy
   labels:
-    app: azure-account-show
-  namespace: azure-account-show
+    app: build-and-deploy
+  namespace: namespace-workflow-1706191278103
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: azure-account-show
+      app: build-and-deploy
   template:
     metadata:
       labels:
-        app: azure-account-show
+        app: build-and-deploy
     spec:
       containers:
-        - name: azure-account-show
-          image: clwaltke.azurecr.io/azure-account-show:latest
+        - name: build-and-deploy
+          image: acrworkflow1706191278103.azurecr.io/image-workflow-1706191278103:latest
+          ports:
+            - containerPort: 8000
