@@ -1,12 +1,26 @@
-FROM python:3.11-slim
-ENV PORT 8000
-EXPOSE 8000
-WORKDIR /usr/src/app
+FROM python:3.11-buster as builder
 
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install poetry==1.8.4
 
-COPY . .
+ENV POETRY_NO_INTERACTION=1 \
+    POETRY_VIRTUALENVS_IN_PROJECT=1 \
+    POETRY_VIRTUALENVS_CREATE=1 \
+    POETRY_CACHE_DIR=/tmp/poetry_cache
 
-ENTRYPOINT ["python"]
-CMD ["app.py"]
+WORKDIR /app
+
+COPY pyproject.toml poetry.lock ./
+
+RUN poetry install --without dev --no-root && rm -rf $POETRY_CACHE_DIR
+
+FROM python:3.11-slim-buster as runtime
+
+ENV VIRTUAL_ENV=/app/.venv \
+    PATH="/app/.venv/bin:$PATH" \
+		PYTHONUNBUFFERED=1
+
+COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
+
+COPY app.py ./
+
+ENTRYPOINT ["python", "app.py"]
