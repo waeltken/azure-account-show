@@ -1,4 +1,5 @@
 import sys, signal, time
+from pprint import pprint
 
 from azure.identity import DefaultAzureCredential
 from azure.mgmt.subscription import SubscriptionClient
@@ -16,10 +17,11 @@ def show_subscription():
         credential = DefaultAzureCredential()
         subscription_client = SubscriptionClient(credential)
         subscription_list = subscription_client.subscriptions.list()
-        subscription_count = 0
-        for subscription in subscription_list:
-            subscription_count += 1
-            print(subscription)
+        subscription_list = [vars(subscription) for subscription in subscription_list]
+        subscription_count = len(subscription_list)
+        if subscription_count > 0:
+            print(f"Found {subscription_count} subscriptions:")
+            pprint(subscription_list)
         if subscription_count == 0:
             print("This account does not have access to any subscriptions.")
     except ClientAuthenticationError as e:
