@@ -17,7 +17,7 @@ FROM python:3.11-slim-buster as runtime
 
 ENV VIRTUAL_ENV=/app/.venv \
     PATH="/app/.venv/bin:$PATH" \
-		PYTHONUNBUFFERED=1
+    PYTHONUNBUFFERED=1
 
 COPY --from=builder ${VIRTUAL_ENV} ${VIRTUAL_ENV}
 
