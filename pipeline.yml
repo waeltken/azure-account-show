@@ -1,0 +1,27 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  imageName: azure-account-show
+  acrLoginServer: sieportalacrcw1234.azurecr.io
+
+steps:
+- task: Docker@2
+  displayName: Build and push image to ACR
+  inputs:
+    command: buildAndPush
+    containerRegistry: AzureACR msclwaltke
+    repository: $(imageName)
+    Dockerfile: Dockerfile
+    tags: |
+      $(Build.BuildId)
+      latest
+
+- script: |
+    echo Pushed image:
+    echo $(acrLoginServer)/$(imageName):$(Build.BuildId)
+    echo $(acrLoginServer)/$(imageName):latest
+  displayName: Show pushed image tags
